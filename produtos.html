@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos e Simulador Sob Medida - Disbral Alumínio</title>
+  <link rel="stylesheet" href="disbral.css">
+  <script src="disbral.js" defer></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Ajustes específicos para a página de produtos mantendo a identidade Disbral */
+    .subtitulo-header {
+      color: #334155;
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .nav-produtos-barra {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 2.2rem;
+      padding: 12px 20px;
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+    }
+
+    .nav-produtos-barra a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.98rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-produtos-barra a:hover {
+      color: #ff6b72;
+    }
+
+    .bloco-pagina {
+      margin-bottom: 3.5rem;
+    }
+
+    .cabecalho-secao {
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+
+    .titulo-secao {
+      color: #ffffff;
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      display: inline-block;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid #d11e27;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Grid de Produtos Tamanho Padrão */
+    .grid-produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .card-produto {
+      background-color: #ffffff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-top: 3px solid #1b2669;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.28s ease,
+                  border-color 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .card-produto:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 20px 38px rgba(0, 0, 0, 0.62);
+      border-top-color: #d11e27;
+    }
+
+    .card-link-imagem {
+      display: block;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      background-color: #e2e8f0;
+    }
+
+    .card-link-imagem img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .card-produto:hover .card-link-imagem img {
+      transform: scale(1.05);
+    }
+
+    .card-conteudo {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #1e293b;
+    }
+
+    .card-conteudo h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.45rem;
+      color: #1b2669;
+    }
+
+    .card-conteudo p {
+      font-size: 0.92rem;
+      color: #475569;
+      margin-bottom: 1rem;
+    }
+
+    .card-link-texto {
+      color: #d11e27;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .card-link-texto:hover {
+      color: #1b2669;
+      text-decoration: underline;
+    }
+
+    /* Seção Simulador */
+    .simulador-box {
+      background-color: #ffffff;
+      color: #1e293b;
+      border-radius: 14px;
+      padding: 2rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+      border-top: 4px solid #1b2669;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .simulador-box {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-grupo {
+      margin-bottom: 1.15rem;
+    }
+
+    .form-grupo label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #1b2669;
+    }
+
+    .form-grupo select,
+    .form-grupo input {
+      width: 100%;
+      padding: 0.72rem 0.85rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #0f172a;
+      background-color: #f8fafc;
+    }
+
+    .form-grupo select:focus,
+    .form-grupo input:focus {
+      outline: none;
+      border-color: #1b2669;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(27, 38, 105, 0.15);
+    }
+
+    .linha-medidas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .btn-simular {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #d11e27;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.22s ease, transform 0.15s ease;
+    }
+
+    .btn-simular:hover {
+      background-color: #b0151d;
+    }
+
+    .btn-simular:active {
+      transform: scale(0.99);
+    }
+
+    .resultado-box {
+      background-color: #f8fafc;
+      border: 2px dashed #94a3b8;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .resultado-box span {
+      display: block;
+      font-size: 0.95rem;
+      color: #475569;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .valor-estimado {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #1b2669;
+      margin-bottom: 0.5rem;
+    }
+
+    .detalhe-calculo {
+      font-size: 0.9rem;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho com a identidade Disbral -->
+  <header class="header">
+    <div class="logo-titulo-container">
+      <div class="logo-box">
+        <img src="Logofundo.png" alt="logo Disbral" class="logo-centralizada">
+      </div>
+      <div>
+        <h1>DISBRAL <span class="destaque-red">Alumínio</span></h1>
+        <p class="subtitulo-header">Catálogo e simulação sob medida</p>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="index.html">Início</a>
+      <a href="produtos.html">Produtos</a>
+      <a href="https://wa.me/5521988441402?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20os%20produtos!" target="_blank" rel="noopener noreferrer">Contato</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <nav class="nav-produtos-barra" aria-label="Atalhos da página de produtos">
+      <a href="index.html">&larr; Voltar ao Início</a>
+      <a href="#produtos-padrao">Produtos Tamanho Padrão</a>
+      <a href="#simulador">Simule o valor de tamanho personalizado</a>
+    </nav>
+
+    <!-- Seção 1: Produtos Tamanho Padrão -->
+    <section id="produtos-padrao" class="bloco-pagina">
+      <div class="cabecalho-secao">
+        <h2 class="titulo-secao">Produtos Tamanho Padrão</h2>
+      </div>
+
+      <div class="grid-produtos">
+        <!-- Container 1: Janelas -->
+        <article class="card-produto" id="janelas">
+          <a href="#simulador" class="card-link-imagem" title="Simular Janelas">
+            <img src="https://placehold.co/600x400/1b2669/ffffff?text=Janelas" alt="Janelas tamanho padrão">
+          </a>
+          <div class="card-conteudo">
+            <div>
+              <h3>Janelas</h3>
+              <p>Modelos de correr, maxim-ar e venezianas nas medidas padrão de mercado.</p>
+            </div>
+            <a href="#simulador" class="card-link-texto">Simular medida &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Container 2: Portas -->
+        <article class="card-produto" id="portas">
+          <a href="#simulador" class="card-link-imagem" title="Simular Portas">
+            <img src="https://placehold.co/600x400/1b2669/ffffff?text=Portas" alt="Portas tamanho padrão">
+          </a>
+          <div class="card-conteudo">
+            <div>
+              <h3>Portas</h3>
+              <p>Portas sociais, pivotantes e de correr com acabamento reforçado.</p>
+            </div>
+            <a href="#simulador" class="card-link-texto">Simular medida &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Container 3: Portões -->
+        <article class="card-produto" id="portoes">
+          <a href="#simulador" class="card-link-imagem" title="Simular Portões">
+            <img src="https://placehold.co/600x400/1b2669/ffffff?text=Portoes" alt="Portões tamanho padrão">
+          </a>
+          <div class="card-conteudo">
+            <div>
+              <h3>Portões</h3>
+              <p>Portões de garagem e sociais prontos para instalação rápida.</p>
+            </div>
+            <a href="#simulador" class="card-link-texto">Simular medida &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Container 4: Basculhantes -->
+        <article class="card-produto" id="basculhantes">
+          <a href="#simulador" class="card-link-imagem" title="Simular Basculhantes">
+            <img src="https://placehold.co/600x400/1b2669/ffffff?text=Basculhantes" alt="Basculhantes tamanho padrão">
+          </a>
+          <div class="card-conteudo">
+            <div>
+              <h3>Basculhantes</h3>
+              <p>Ideais para ventilação constante em cozinhas, banheiros e áreas de serviço.</p>
+            </div>
+            <a href="#simulador" class="card-link-texto">Simular medida &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Seção 2: Simulador de Tamanho Personalizado -->
+    <section id="simulador" class="bloco-pagina">
+      <div class="cabecalho-secao">
+        <h2 class="titulo-secao">Simule o valor de tamanho personalizado</h2>
+      </div>
+
+      <div class="simulador-box">
+        <form id="form-simulador">
+          <div class="form-grupo">
+            <label for="tipo-produto">Tipo de Produto</label>
+            <select id="tipo-produto" required>
+              <option value="450">Janela (R$ 450,00 / m²)</option>
+              <option value="580">Porta (R$ 580,00 / m²)</option>
+              <option value="650">Portão (R$ 650,00 / m²)</option>
+              <option value="420">Basculhante (R$ 420,00 / m²)</option>
+            </select>
+          </div>
+
+          <div class="linha-medidas">
+            <div class="form-grupo">
+              <label for="largura">Largura (metros)</label>
+              <input type="number" id="largura" step="0.01" min="0.2" placeholder="Ex: 1.50" required>
+            </div>
+
+            <div class="form-grupo">
+              <label for="altura">Altura (metros)</label>
+              <input type="number" id="altura" step="0.01" min="0.2" placeholder="Ex: 1.20" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-simular">Calcular Orçamento Estimado</button>
+        </form>
+
+        <div class="resultado-box">
+          <span>Valor estimado para as medidas informadas</span>
+          <div class="valor-estimado" id="valor-total">R$ 0,00</div>
+          <p class="detalhe-calculo" id="detalhe-area">Informe a largura e a altura para simular.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Disbral Alumínio. Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>
