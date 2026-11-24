@@ -90,7 +90,7 @@ function obterSimulacaoSalva(): SimulacaoSalva | null {
 }
 
 /* ===========================
-   1. Lógica do Carrossel (Index)
+1. Lógica do Carrossel (Index)
    =========================== */
 function iniciarCarrossel(): void {
   const container = document.querySelector('.carrossel-container') as HTMLElement | null;
@@ -155,7 +155,7 @@ function iniciarCarrossel(): void {
 }
 
 /* ===========================
-   2. Calculadora Sob Medida (Produtos)
+2. Calculadora Sob Medida (Produtos)
    =========================== */
 function iniciarCalculadora(): void {
   const selectProduto = document.getElementById('tipo-produto') as HTMLSelectElement | null;
@@ -259,19 +259,6 @@ function iniciarCalculadora(): void {
       atualizadoEm: new Date().toISOString(),
     });
   };
-
-  // Clique nos cards superiores ("Produtos Tamanho Padrão") pré-seleciona o produto na calculadora
-  const cardsCategoria = document.querySelectorAll<HTMLElement>('.card-produto[id]');
-  cardsCategoria.forEach((card) => {
-    const id = card.id as CategoriaProduto;
-    if (id in PRODUTOS_CONFIG) {
-      card.addEventListener('click', () => {
-        salvarCategoria(id);
-        selectProduto.value = PRODUTOS_CONFIG[id].valorSelect;
-        calcular(false);
-      });
-    }
-  });
 
   // Se veio de outra página com uma categoria selecionada
   const categoriaSalva = obterCategoriaSalva();
