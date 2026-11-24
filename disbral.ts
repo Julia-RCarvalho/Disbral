@@ -191,10 +191,11 @@ function iniciarCalculadora(): void {
     btnWhats.addEventListener('click', () => {
       const simulacao = obterSimulacaoSalva();
       const mensagem = simulacao
-        ? `Olá Disbral! Fiz uma simulação no site:\n` +
+        ? `Olá, Disbral! Fiz uma simulação no site:\n` +
           `• Produto: ${simulacao.produtoNome}\n` +
           `• Medidas: ${simulacao.largura.toFixed(2)}m x ${simulacao.altura.toFixed(2)}m (${simulacao.areaReal.toFixed(2)} m²)\n` +
-          `• Valor estimado: ${formatarMoedaBRL(simulacao.total)}`
+          `• Valor estimado: ${formatarMoedaBRL(simulacao.total)} \n` +
+          `Qual é o próximo passo?`
         : 'Olá Disbral! Gostaria de solicitar um orçamento sob medida.';
 
       const url = `https://wa.me/${WHATSAPP_DISBRAL}?text=${encodeURIComponent(mensagem)}`;
